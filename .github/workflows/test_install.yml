@@ -32,10 +32,10 @@ jobs:
             
 
       - name: install dependencies
-        # env:
-          # GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-          # git config --global url."https://x-access-token:${{ env.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ env.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
           poetry install
       - name: Test
         run: |
