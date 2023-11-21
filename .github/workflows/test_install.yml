@@ -1,0 +1,7 @@
+name: test install with pat
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]

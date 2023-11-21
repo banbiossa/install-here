@@ -8,6 +8,8 @@ packages = [{include = "install_here"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+the-package = {git = "https://github.com/banbiossa/github-pat-the-package.git"}
+pytest = "^7.4.3"
 
 
 [build-system]
