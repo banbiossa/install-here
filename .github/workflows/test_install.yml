@@ -1,0 +1,50 @@
+name: test install with pat
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: install poetry
+        run: |
+          pip install poetry==1.7.1
+      # - uses: tibdex/github-app-token@v2
+      #   name: Create GitHub App Token
+      #   id: app-token
+      #   with:
+      #     app_id: ${{ secrets.PRIVATE_REPO_READER_APP_ID }}
+      #     private_key: ${{ secrets.PRIVATE_REPO_READER_PRIVATE_KEY }}
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1.6.0
+        with:
+          app-id: ${{ secrets.PRIVATE_REPO_READER_APP_ID }}
+          private-key: ${{ secrets.PRIVATE_REPO_READER_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      
+      - name: clone said repo
+        run: |
+          # git config --global url."https://x-access-token:${{ env.GITHUB_APP_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ env.GITHUB_APP_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git clone https://github.com/banbiossa/github-pat-the-package.git
+        env:
+          GITHUB_APP_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: install dependencies
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          git config --global url."https://x-access-token:${{ env.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          poetry install
+      - name: Test
+        run: |
+          pytest

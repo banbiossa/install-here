@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "install-here"
+version = "0.1.0"
+description = ""
+authors = ["shota shimizu <shota.shimizu@legalontech.jp>"]
+readme = "README.md"
+packages = [{include = "install_here"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+the-package = {git = "https://github.com/banbiossa/github-pat-the-package.git"}
+pytest = "^7.4.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
