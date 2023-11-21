@@ -32,7 +32,10 @@ jobs:
       
       - name: clone said repo
         run: |
+          git config --global url."https://x-access-token:${{ env.GITHUB_APP_TOKEN }}@github.com/".insteadOf "https://github.com/"
           git clone https://github.com/banbiossa/github-pat-the-package.git
+        env:
+          GITHUB_APP_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: install dependencies
         env:
