@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "install-here"
+version = "0.1.0"
+description = ""
+authors = ["shota shimizu <shota.shimizu@legalontech.jp>"]
+readme = "README.md"
+packages = [{include = "install_here"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
